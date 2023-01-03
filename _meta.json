@@ -1,0 +1,11 @@
+{
+  "id": "KANA-MultiRes",
+  "name": "Multi Res",
+  "version": "1.0.0",
+  "compatible_game_version": ["0.6.1.6"],
+  "authors": ["KANA"],
+  "description": "Allows you to set 3 diffrent screen settings under the general settings tab.",
+  "website_url": "",
+  "dependencies": [],
+  "incompatibilities": []
+}
