@@ -16,7 +16,7 @@ func KANA_change_background():
 	
 	# Load gradient material
 	
-	var gradient_material = load("res://KANA-MultiRes/gradient_material.tres")
+	var gradient_material = load("res://mods-unpacked/KANA-MultiRes/gradient_material.tres")
 	_background.material = gradient_material	
 	_background.material.set_shader_param("second_color", RunData.get_background_gradient_color())
 	ModLoader.mod_log(str("KANAMultiRes: Changed Background"))
