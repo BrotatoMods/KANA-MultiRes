@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="Shader" format=2]
 
-[sub_resource type="Shader" id=1]
+[resource]
 code = "shader_type canvas_item;
 
 uniform vec4 first_color : hint_color = vec4(1.0);
@@ -12,15 +12,7 @@ uniform float angle : hint_range(0.0, 360.0) = 0.0;
 void fragment() {
 	float pivot = position + 0.5;
 	vec2 uv = UV - pivot;
-	float rotated = uv.x * cos(radians(angle)) - uv.y * sin(radians(angle)); 
+	float rotated = uv.x * cos(radians(angle)) - uv.y * sin(radians(angle));
 	float pos = smoothstep((1.0 - size) + position, size + 0.0001 + position, rotated + pivot);
-	COLOR = mix(first_color, second_color, pos); 
+	COLOR = mix(first_color, second_color, pos);
 }"
-
-[resource]
-shader = SubResource( 1 )
-shader_param/first_color = Color( 0.0313726, 0.0313726, 0.0313726, 1 )
-shader_param/second_color = Color( 0, 0, 0, 1 )
-shader_param/position = -0.223
-shader_param/size = 0.835
-shader_param/angle = 90.0

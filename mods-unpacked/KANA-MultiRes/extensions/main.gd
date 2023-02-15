@@ -1,7 +1,9 @@
 extends "res://main.gd"
 
+const KANA_MULTI_RES_LOG_NAME = "KANA-MultiRes"
+
 func KANA_change_background():
-	ModLoader.mod_log(str("KANAMultiRes: Change Background"))
+	ModLoaderUtils.log_debug("Change Background", KANA_MULTI_RES_LOG_NAME)
 	# modify texture rect
 	_background.rect_rotation = 0
 	_background.size_flags_horizontal = 3
@@ -13,20 +15,19 @@ func KANA_change_background():
 	_background.margin_bottom = 0
 	_background.margin_left = 0
 	_background.expand = true
-	
+
 	# Load gradient material
-	
-	var gradient_material = load("res://mods-unpacked/KANA-MultiRes/gradient_material.tres")
-	_background.material = gradient_material	
+	var gradient_material = load("res://mods-unpacked/KANA-MultiRes/extensions/gradient_material.tres")
+	_background.material = gradient_material
 	_background.material.set_shader_param("second_color", RunData.get_background_gradient_color())
-	ModLoader.mod_log(str("KANAMultiRes: Changed Background"))
+	ModLoaderUtils.log_debug("Changed Background", KANA_MULTI_RES_LOG_NAME)
 
 func KANA_add_ARC():
-	ModLoader.mod_log(str("KANAMultiRes: adding ARC"))
+	ModLoaderUtils.log_debug("adding ARC", KANA_MULTI_RES_LOG_NAME)
 	# Create ARC Node
 	var arc = AspectRatioContainer.new()
 	arc.name = "ARC"
-	
+
 	# Add it to the UI node
 	var ui = .get_node("UI")
 	ui.add_child(arc)
@@ -34,7 +35,7 @@ func KANA_add_ARC():
 	arc.ratio = 1.7778
 	arc.anchor_right = 1.0
 	arc.anchor_bottom = 1.0
-	
+
 	# Move HUD in ARC Node
 	var hud = ui.get_node('HUD')
 	hud.rect_position = Vector2.ZERO
@@ -43,7 +44,7 @@ func KANA_add_ARC():
 	hud.size_flags_horizontal = Control.SIZE_FILL
 	hud.size_flags_vertical = Control.SIZE_FILL
 	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
+
 	# Update all HUD Paths
 	_life_label = $UI / ARC / HUD / LifeContainer / UILifeBar / MarginContainer / LifeLabel
 	_level_label = $UI / ARC / HUD / LifeContainer / UIXPBar / MarginContainer / LevelLabel
@@ -58,9 +59,9 @@ func KANA_add_ARC():
 	_ui_wave_container = $UI / ARC / HUD / WaveContainer
 	_ui_upgrades_to_process = $UI / ARC / HUD / ThingsToProcessContainer / Upgrades
 	_ui_consumables_to_process = $UI / ARC / HUD / ThingsToProcessContainer / Consumables
-	
-	ModLoader.mod_log(str("KANAMultiRes: added ARC"))
-	
+
+	ModLoaderUtils.log_debug("added ARC", KANA_MULTI_RES_LOG_NAME)
+
 func _ready():
 	KANA_change_background()
 	KANA_add_ARC()
@@ -70,24 +71,24 @@ func init_camera():
 	KANA_init_camera()
 
 func KANA_init_camera():
-	ModLoader.mod_log(str("KANAMultiRes: init_camera - Utils.width/height -> ", Utils.width, " x ", Utils.height))
+	ModLoaderUtils.log_debug(str("init_camera - Utils.width/height -> ", Utils.width, " x ", Utils.height), KANA_MULTI_RES_LOG_NAME)
 	var max_pos = ZoneService.current_zone_max_position
 	var min_pos = ZoneService.current_zone_min_position
-	
+
 	var zone_w = max_pos.x - min_pos.x
 	var zone_h = max_pos.y - min_pos.y
-	
+
 	_camera.center_horizontal_pos = zone_w / 2
 	_camera.center_vertical_pos = zone_h / 2
-	
+
 #	if zone_w + EDGE_SIZE * 2 <= Utils.project_width:
 	if zone_w + EDGE_SIZE * 2 <= Utils.width:
-		ModLoader.mod_log("KANAMultiRes: _camera.center_horizontal = true")
+		ModLoaderUtils.log_debug("_camera.center_horizontal = true", KANA_MULTI_RES_LOG_NAME)
 		_camera.center_horizontal = true
 	else :
 		_camera.limit_right = max_pos.x + EDGE_SIZE
 		_camera.limit_left = min_pos.x - EDGE_SIZE
-	
+
 #	if zone_h + EDGE_SIZE * 2 <= Utils.project_height:
 	if zone_h + EDGE_SIZE * 2 <= Utils.height:
 		_camera.center_vertical = true

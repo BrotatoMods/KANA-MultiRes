@@ -7,7 +7,7 @@ onready var screen_stretch_button = $"%ScreenStretchButton"
 func _ready()->void :
 	for screen_option in ProgressData.screen_stretch:
 		add_item(screen_option)
-	
+
 	screen_stretch_button.select(ProgressData.settings.screen_stretch)
 
 
