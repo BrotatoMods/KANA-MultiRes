@@ -1,6 +1,6 @@
 # Multiple Resolutions Mod
 
-Tested with Game Version: 0.6.1.6
+Tested with Game Version: 0.8.0.3
   
   <br />
   
