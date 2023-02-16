@@ -2,14 +2,14 @@
 	"name": "MultiRes",
 	"namespace": "KANA",
 	"version_number": "2.1.0",
-	"description": "Allows you to set 3 diffrent screen settings under the general settings tab.",
+	"description": "Allows you to set 3 different screen settings under the general settings tab.",
 	"website_url": "https://github.com/BrotatoMods",
 	"dependencies": [],
 	"extra": {
 		"godot": {
 			"incompatibilities": [],
 			"authors": ["KANA"],
-			"compatible_mod_loader_version": "4.2.0",
+			"compatible_mod_loader_version": "4.1.0",
 			"compatible_game_version": ["0.8.0.3"],
 			"config_defaults": {}
 		}
