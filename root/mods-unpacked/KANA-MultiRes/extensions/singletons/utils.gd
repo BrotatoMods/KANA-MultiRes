@@ -50,8 +50,8 @@ func set_strecht_mode() -> void:
 				)
 	# Settings set to "expand"
 	elif(ProgressData.settings.screen_stretch == 1):
-			width = viewport_width
-			height = viewport_height
+			width = viewport_width if viewport_width > 1920 else 1920
+			height = viewport_height if viewport_height > 1080 else 1080
 
 			ModLoaderUtils.log_debug(str("Set stretch mode to EXPAND: ", width, " x ", height), KANA_MULTI_RES_LOG_NAME)
 

@@ -1,8 +1,8 @@
 {
 	"name": "MultiRes",
 	"namespace": "KANA",
-	"version_number": "2.1.0",
-	"description": "Allows you to set 3 different screen settings under the general settings tab.",
+	"version_number": "2.1.1",
+	"description": "Allows you to set 3 different screen settings under the general settings tab. \n \n \n \n Changelog - v2.1.0 \n [indent]- Removed the check for minimum width, so setting to expand should work now for everyone. [/indent] \n \n Changelog - v2.1.1 \n [indent]- Added a min height and width for the expand setting, but still switch the screen stretch to expand. \n This should fix the very zoomed in camera on the Steam Deck. [/indent]",
 	"website_url": "https://github.com/BrotatoMods",
 	"dependencies": [],
 	"extra": {
