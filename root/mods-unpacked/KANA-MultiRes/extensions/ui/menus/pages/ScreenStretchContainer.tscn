@@ -4,6 +4,7 @@
 [ext_resource path="res://resources/fonts/actual/base/font_big_outlined.tres" type="DynamicFont" id=2]
 [ext_resource path="res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/pages/ScreenStretchContainer.gd" type="Script" id=3]
 
+
 [node name="ScreenStretchContainer" type="HBoxContainer"]
 margin_top = 70.0
 margin_right = 780.0

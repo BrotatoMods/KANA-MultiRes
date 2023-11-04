@@ -9,6 +9,6 @@ func _ready():
 	screen_stretch_container.connect("item_selected", self , "_on_screen_stretch_setting_changed")
 
 func _on_screen_stretch_setting_changed(index):
-	ModLoaderUtils.log_debug("stretch setting changed to -> " + str(index), KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug("stretch setting changed to -> " + str(index), KANA_MULTI_RES_LOG_NAME)
 	info_text_label.show_info_text("MENU_INFO_TEXT_NEXT_WAVE")
 

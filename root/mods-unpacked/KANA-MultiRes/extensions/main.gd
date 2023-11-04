@@ -1,9 +1,11 @@
 extends "res://main.gd"
 
+
 const KANA_MULTI_RES_LOG_NAME = "KANA-MultiRes"
 
+
 func KANA_change_background():
-	ModLoaderUtils.log_debug("Change Background", KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug("Change Background", KANA_MULTI_RES_LOG_NAME)
 	# modify texture rect
 	_background.rect_rotation = 0
 	_background.size_flags_horizontal = 3
@@ -20,10 +22,11 @@ func KANA_change_background():
 	var gradient_material = load("res://mods-unpacked/KANA-MultiRes/extensions/gradient_material.tres")
 	_background.material = gradient_material
 	_background.material.set_shader_param("second_color", RunData.get_background_gradient_color())
-	ModLoaderUtils.log_debug("Changed Background", KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug("Changed Background", KANA_MULTI_RES_LOG_NAME)
+
 
 func KANA_add_ARC():
-	ModLoaderUtils.log_debug("adding ARC", KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug("adding ARC", KANA_MULTI_RES_LOG_NAME)
 	# Create ARC Node
 	var arc = AspectRatioContainer.new()
 	arc.name = "ARC"
@@ -60,18 +63,25 @@ func KANA_add_ARC():
 	_ui_upgrades_to_process = $UI / ARC / HUD / ThingsToProcessContainer / Upgrades
 	_ui_consumables_to_process = $UI / ARC / HUD / ThingsToProcessContainer / Consumables
 
-	ModLoaderUtils.log_debug("added ARC", KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug("added ARC", KANA_MULTI_RES_LOG_NAME)
+
 
 func _ready():
 	KANA_change_background()
 	KANA_add_ARC()
 
+
 func init_camera():
+	if RunData.current_character.my_id == "character_train_conductor":
+		.init_camera()
+		return
+
 	Utils.set_strecht_mode()
 	KANA_init_camera()
 
+
 func KANA_init_camera():
-	ModLoaderUtils.log_debug(str("init_camera - Utils.width/height -> ", Utils.width, " x ", Utils.height), KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug(str("init_camera - Utils.width/height -> ", Utils.width, " x ", Utils.height), KANA_MULTI_RES_LOG_NAME)
 	var max_pos = ZoneService.current_zone_max_position
 	var min_pos = ZoneService.current_zone_min_position
 
@@ -83,7 +93,7 @@ func KANA_init_camera():
 
 #	if zone_w + EDGE_SIZE * 2 <= Utils.project_width:
 	if zone_w + EDGE_SIZE * 2 <= Utils.width:
-		ModLoaderUtils.log_debug("_camera.center_horizontal = true", KANA_MULTI_RES_LOG_NAME)
+		ModLoaderLog.debug("_camera.center_horizontal = true", KANA_MULTI_RES_LOG_NAME)
 		_camera.center_horizontal = true
 	else :
 		_camera.limit_right = max_pos.x + EDGE_SIZE
