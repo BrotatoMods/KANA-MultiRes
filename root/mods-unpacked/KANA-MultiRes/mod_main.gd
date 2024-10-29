@@ -1,26 +1,46 @@
 extends Node
 
 
-const KANA_MULTI_RES_LOG_NAME = "KANA-MultiRes"
+const KANA_MULTI_RES_DIR := "KANA-MultiRes"
+const KANA_MULTI_RES_LOG_NAME := "KANA-MultiRes:ModMain"
+
+var mod_dir_path := ""
+var extensions_dir_path := ""
+var translations_dir_path := ""
 
 
-func _init(modLoader = ModLoader):
+func _init():
+	mod_dir_path = ModLoaderMod.get_unpacked_dir().plus_file(KANA_MULTI_RES_DIR)
+
+	install_script_extensions()
+	add_translations()
+
+	ModLoaderLog.info("Initialized", KANA_MULTI_RES_LOG_NAME)
+
+
+func install_script_extensions() -> void:
+	extensions_dir_path = mod_dir_path.plus_file("extensions")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/utils.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/progress_data.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/main.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/run/end_run.gd")
-#	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/shop/shop.gd")
+	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/debug_service.gd")
+	#	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/shop/shop.gd")
 	# Extending debug_service with script extension for shop.gd because in shop.gd is a reference to RunData.
 	# And RunData is not yet initialized when calling this extension here.
 	# To avoid an error in editor I moved the  script extension for shop.gd inside the debug_service extension
 	# ¯\_ツ)_/¯
-	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/debug_service.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/title_screen/title_screen.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/pages/menu_general_options.gd")
+	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/ingame/ingame_main_menu.gd")
+	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/ingame/upgrades_ui.gd")
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/global/focus_emulator.gd"))
+
+
+func add_translations() -> void:
+	translations_dir_path = mod_dir_path.plus_file("translations")
 	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/KANAMultiRes_Translation.de.translation")
 	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/KANAMultiRes_Translation.en.translation")
-
-	ModLoaderLog.info("Initialized", KANA_MULTI_RES_LOG_NAME)
 
 
 func _ready():
