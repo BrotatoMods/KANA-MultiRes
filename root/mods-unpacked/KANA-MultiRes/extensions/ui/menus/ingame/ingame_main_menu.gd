@@ -29,4 +29,6 @@ func KANA_add_ARC():
 	margin_container.size_flags_vertical = Control.SIZE_FILL
 	margin_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+	.move_child(arc, 0)
+
 	ModLoaderLog.debug("added ARC to ingame main menu", KANA_MULTI_RES_LOG_NAME_INGAME_MAIN_MENU)
