@@ -3,7 +3,7 @@ extends "res://ui/menus/pages/menu_general_options.gd"
 const KANA_MULTI_RES_LOG_NAME = "KANA-MultiRes"
 
 onready var info_text_label = get_node('InfoText')
-onready var screen_stretch_container = get_node("Options/Column1/VideoContainer/LeftContainer/ScreenStretchContainer")
+onready var screen_stretch_container = get_node("%LeftContainer/ScreenStretchContainer")
 
 func _ready():
 	screen_stretch_container.connect("item_selected", self , "_on_screen_stretch_setting_changed")
