@@ -22,8 +22,8 @@ func check_main():
 	return get_tree().get_root().has_node("Main")
 
 
-func set_strecht_mode() -> void:
-	ModLoaderLog.debug(str('Calling set_strecht_mode with argument -> ', ProgressData.screen_stretch[ProgressData.settings.screen_stretch]), KANA_MULTI_RES_LOG_NAME)
+func set_stretch_mode() -> void:
+	ModLoaderLog.debug(str('Calling set_stretch_mode with argument -> ', ProgressData.screen_stretch[ProgressData.settings.screen_stretch]), KANA_MULTI_RES_LOG_NAME)
 
 	var is_main = check_main()
 
@@ -40,8 +40,21 @@ func set_strecht_mode() -> void:
 			SceneTree.STRETCH_ASPECT_KEEP,
 			Vector2(width, height)
 			)
+	# Settings set to "expand"
+	elif(ProgressData.settings.screen_stretch == 1):
+			width = viewport_width if viewport_width > Utils.project_width else Utils.project_width
+			height = viewport_height if viewport_height > Utils.project_height else Utils.project_height
+
+			ModLoaderLog.debug(str("Set stretch mode to EXPAND: ", width, " x ", height), KANA_MULTI_RES_LOG_NAME)
+
+			get_tree().set_screen_stretch(
+				SceneTree.STRETCH_MODE_2D,
+				SceneTree.STRETCH_ASPECT_EXPAND,
+				Vector2(width, height)
+			)
+	# Settings set to "expand width"
 	elif(ProgressData.settings.screen_stretch == 2):
-		# Settings set to "expand width"
+
 		width = Utils.visible_rect_width
 		height = Utils.project_height
 
@@ -52,17 +65,14 @@ func set_strecht_mode() -> void:
 				SceneTree.STRETCH_ASPECT_KEEP_HEIGHT,
 				Vector2(Utils.project_width, Utils.height)
 				)
-	# Settings set to "expand"
-	elif(ProgressData.settings.screen_stretch == 1):
-			width = viewport_width if viewport_width > 1920 else 1920
-			height = viewport_height if viewport_height > 1080 else 1080
-
+	# Settings set to "expand (no zoom)"
+	elif(ProgressData.settings.screen_stretch == 3):
 			ModLoaderLog.debug(str("Set stretch mode to EXPAND: ", width, " x ", height), KANA_MULTI_RES_LOG_NAME)
 
 			get_tree().set_screen_stretch(
 				SceneTree.STRETCH_MODE_2D,
 				SceneTree.STRETCH_ASPECT_EXPAND,
-				Vector2(width, height)
+				Vector2(Utils.project_width, Utils.project_height)
 			)
 
 
@@ -75,6 +85,6 @@ func handle_size_changed() -> void:
 	visible_rect_width = visible_rect_size.x
 	visible_rect_height = visible_rect_size.y
 
-	ModLoaderLog.debug(str("Viewport visible_rect -> ", visible_rect_size), KANA_MULTI_RES_LOG_NAME)
+	ModLoaderLog.debug(str("Viewport visible_rect -> ", visible_rect_size.x, " x ",visible_rect_size.y), KANA_MULTI_RES_LOG_NAME)
 	ModLoaderLog.debug(str("Size changed! : ", viewport_width , ' x ', viewport_height), KANA_MULTI_RES_LOG_NAME)
-	set_strecht_mode()
+	set_stretch_mode()

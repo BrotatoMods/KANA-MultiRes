@@ -56,7 +56,7 @@ func KANA_edit_general_options_scene():
 	var menu_general_options = load("res://ui/menus/pages/menu_general_options.tscn").instance()
 	menu_general_options.add_child(info_text)
 	info_text.set_owner(menu_general_options)
-	var wrapper = menu_general_options.get_node('Options/Column1/VideoContainer/VBoxContainer')
+	var wrapper = menu_general_options.get_node('Options/Column1/VideoContainer/LeftContainer')
 	var full_screen_btn = wrapper.get_node('FullScreenButton')
 	wrapper.add_child_below_node(full_screen_btn, screen_stretch_container, true)
 	screen_stretch_button.select(ProgressData.settings.screen_stretch)

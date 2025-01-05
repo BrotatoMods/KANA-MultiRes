@@ -62,4 +62,4 @@ func KANA_add_ARC():
 func _ready():
 	KANA_change_background()
 	KANA_add_ARC()
-	Utils.set_strecht_mode()
+	Utils.set_stretch_mode()
