@@ -65,7 +65,7 @@ func set_stretch_mode() -> void:
 				SceneTree.STRETCH_ASPECT_KEEP_HEIGHT,
 				Vector2(Utils.project_width, Utils.height)
 				)
-	# Settings set to "expand (no zoom)"
+	# Settings set to "expand (no zoom out)"
 	elif(ProgressData.settings.screen_stretch == 3):
 			ModLoaderLog.debug(str("Set stretch mode to EXPAND: ", width, " x ", height), KANA_MULTI_RES_LOG_NAME)
 
