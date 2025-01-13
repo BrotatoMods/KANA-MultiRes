@@ -37,10 +37,31 @@ Tested with Game Version: 1.1.4.0
 
   ## expand (no zoom out)
    
-   Scales width and height for non 16:9 resolutions, but unlike "expand" it keeps zoomed in look and feel of vanilla game. 
-   <br />
-   Examples album for 9:8 (2880 x 2560) resolution: https://imgur.com/a/2880x2560-screen-options-r3yG6rD
-   <br />
-   
-  ![](https://i.imgur.com/649shPC.png)
-  ![](https://i.imgur.com/VBEXgBv.png)
+  Scales width and height for non 16:9 resolutions, but unlike "expand" it keeps zoomed in look and feel of the vanilla game. 
+  <br />
+  <details>
+    <summary>Examples of different options for 9:8 (2880 x 2560) screen</summary>
+  <br />  
+  
+  default (same as without mod)   
+  ![default](https://github.com/user-attachments/assets/c33b74c9-1379-4316-89df-7d093b430bcc)
+  <br />
+  
+  expand
+  ![expand](https://github.com/user-attachments/assets/863a7c91-f960-4767-b2d5-9a007be7f6ba)
+  <br />
+  
+  expand width
+  ![expand_w](https://github.com/user-attachments/assets/cc569e2f-e171-4db1-9fb1-24908dff8b5c)
+  <br />
+  
+  expand(no zoom out)
+  ![expand_nzo](https://github.com/user-attachments/assets/ae158eb3-daac-45b6-bf34-955e3e395fa4)
+  
+  ---
+  
+  </details>
+  <br />
+
+  ![expand_no_zoom_out_settings](https://github.com/user-attachments/assets/eae858bb-aabb-4a82-a4c8-d3b541c135a8)
+  ![expand_no_zoom_out_ingame](https://github.com/user-attachments/assets/bb7cfbc1-0f04-418b-a8cc-2b7ed3e896b8)
