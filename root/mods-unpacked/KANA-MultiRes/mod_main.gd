@@ -21,7 +21,6 @@ func _init():
 func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/utils.gd")
-	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/progress_data.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/main.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/run/end_run.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/singletons/debug_service.gd")
@@ -31,7 +30,6 @@ func install_script_extensions() -> void:
 	# To avoid an error in editor I moved the  script extension for shop.gd inside the debug_service extension
 	# ¯\_ツ)_/¯
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/title_screen/title_screen.gd")
-	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/pages/menu_general_options.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/ingame/ingame_main_menu.gd")
 	ModLoaderMod.install_script_extension("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/ingame/upgrades_ui.gd")
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/global/focus_emulator.gd"))
@@ -45,21 +43,22 @@ func add_translations() -> void:
 
 func _ready():
 	ModLoaderLog.info("Finished loading KANA-Multi-Res mod.", KANA_MULTI_RES_LOG_NAME)
-	KANA_edit_general_options_scene()
+	var mod_options := get_node("/root/ModLoader/dami-ModOptions/ModsConfigInterface")
+	mod_options.connect("setting_changed", self, "_on_mod_options_setting_changed")
 
 
-func KANA_edit_general_options_scene():
-	var screen_stretch_container = load("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/pages/ScreenStretchContainer.tscn").instance()
-	var screen_stretch_button = screen_stretch_container.get_node('ScreenStretchButton')
-	var info_text = load("res://mods-unpacked/KANA-MultiRes/extensions/ui/menus/pages/InfoText.tscn").instance()
+func _on_mod_options_setting_changed(setting_name, value, mod_name) -> void:
+	if mod_name == KANA_MULTI_RES_DIR:
+		if ModLoaderConfig.get_current_config_name(KANA_MULTI_RES_DIR) == "default":
+			var mod_config := ModLoaderConfig.duplicate_config(ModLoaderConfig.get_default_config(KANA_MULTI_RES_DIR), "custom")
+			ModLoaderConfig.set_current_config(mod_config)
 
-	var menu_general_options = load("res://ui/menus/pages/menu_general_options.tscn").instance()
-	menu_general_options.add_child(info_text)
-	info_text.set_owner(menu_general_options)
-	var wrapper = menu_general_options.get_node('%LeftContainer')
-	var full_screen_btn = wrapper.get_node('%FullScreenButton')
-	wrapper.add_child_below_node(full_screen_btn, screen_stretch_container, true)
-	screen_stretch_button.select(ProgressData.settings.screen_stretch)
-	screen_stretch_container.set_owner(menu_general_options)
+		ModLoaderConfig.update_config_value(
+			ModLoaderConfig.get_current_config(KANA_MULTI_RES_DIR),
+			setting_name,
+			value
+		)
 
-	ModLoaderMod.save_scene(menu_general_options, "res://ui/menus/pages/menu_general_options.tscn")
+		if Utils:
+			Utils.set_stretch_mode()
+

@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://mods-unpacked/KANA-MultiRes/translation.en.translation", "res://mods-unpacked/KANA-MultiRes/translation.de.translation" ]
+
+source_file="res://mods-unpacked/KANA-MultiRes/translation.csv"
+dest_files=[ "res://mods-unpacked/KANA-MultiRes/translation.en.translation", "res://mods-unpacked/KANA-MultiRes/translation.de.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

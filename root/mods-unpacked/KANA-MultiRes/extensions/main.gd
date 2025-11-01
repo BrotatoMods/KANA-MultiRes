@@ -34,6 +34,7 @@ func KANA_add_ARC():
 	# Add it to the UI node
 	var ui = .get_node("UI")
 	ui.add_child(arc)
+	ui.move_child(arc, 0)
 	arc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	arc.ratio = 1.7778
 	arc.anchor_right = 1.0

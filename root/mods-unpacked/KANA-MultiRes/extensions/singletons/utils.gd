@@ -23,11 +23,13 @@ func check_main():
 
 
 func set_stretch_mode() -> void:
-	ModLoaderLog.debug(str('Calling set_stretch_mode with argument -> ', ProgressData.screen_stretch[ProgressData.settings.screen_stretch]), KANA_MULTI_RES_LOG_NAME)
+	var config := ModLoaderConfig.get_current_config("KANA-MultiRes")
+
+	ModLoaderLog.debug('Calling set_stretch_mode with -> %s' % config.data.screen_stretch, KANA_MULTI_RES_LOG_NAME)
 
 	var is_main = check_main()
 
-	if(ProgressData.settings.screen_stretch == 0 || !is_main):
+	if(config.data.screen_stretch == "OPTION_SCREEN_STRETCH_KEEP" || !is_main):
 
 		width = Utils.project_width
 		height = Utils.project_height
@@ -41,7 +43,7 @@ func set_stretch_mode() -> void:
 			Vector2(width, height)
 			)
 	# Settings set to "expand"
-	elif(ProgressData.settings.screen_stretch == 1):
+	elif(config.data.screen_stretch == "OPTION_SCREEN_STRETCH_EXPAND"):
 			width = viewport_width if viewport_width > Utils.project_width else Utils.project_width
 			height = viewport_height if viewport_height > Utils.project_height else Utils.project_height
 
@@ -53,7 +55,7 @@ func set_stretch_mode() -> void:
 				Vector2(width, height)
 			)
 	# Settings set to "expand width"
-	elif(ProgressData.settings.screen_stretch == 2):
+	elif(config.data.screen_stretch == "OPTION_SCREEN_STRETCH_EXPAND_WIDTH"):
 
 		width = Utils.visible_rect_width
 		height = Utils.project_height
@@ -66,7 +68,7 @@ func set_stretch_mode() -> void:
 				Vector2(Utils.project_width, Utils.height)
 				)
 	# Settings set to "expand (no zoom out)"
-	elif(ProgressData.settings.screen_stretch == 3):
+	elif(config.data.screen_stretch == "OPTION_SCREEN_STRETCH_EXPAND_NO_ZOOM_OUT"):
 			ModLoaderLog.debug(str("Set stretch mode to EXPAND: ", width, " x ", height), KANA_MULTI_RES_LOG_NAME)
 
 			get_tree().set_screen_stretch(
