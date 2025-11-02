@@ -8,6 +8,7 @@ var mod_dir_path := ""
 var extensions_dir_path := ""
 var translations_dir_path := ""
 
+var mod_options
 
 func _init():
 	mod_dir_path = ModLoaderMod.get_unpacked_dir().plus_file(KANA_MULTI_RES_DIR)
@@ -43,7 +44,7 @@ func add_translations() -> void:
 
 func _ready():
 	ModLoaderLog.info("Finished loading KANA-Multi-Res mod.", KANA_MULTI_RES_LOG_NAME)
-	var mod_options = get_node_or_null("/root/ModLoader/dami-ModOptions/ModsConfigInterface")
+	mod_options = get_node_or_null("/root/ModLoader/dami-ModOptions/ModsConfigInterface")
 	if mod_options:
 		mod_options.connect("setting_changed", self, "_on_mod_options_setting_changed")
 		ModLoaderLog.debug("Connected to Mod Options setting_changed signal.", KANA_MULTI_RES_LOG_NAME)
@@ -66,6 +67,8 @@ func _on_mod_options_setting_changed(setting_name, value, mod_name) -> void:
 			setting_name,
 			value
 		)
+
+		mod_options.load_config(ModLoaderMod.get_mod_data(KANA_MULTI_RES_DIR))
 
 		ModLoaderLog.debug("Updated config %s key %s with value %s" % [ModLoaderConfig.get_current_config_name(KANA_MULTI_RES_DIR), setting_name, value], KANA_MULTI_RES_LOG_NAME)
 
