@@ -37,28 +37,46 @@ func install_script_extensions() -> void:
 
 func add_translations() -> void:
 	translations_dir_path = mod_dir_path.plus_file("translations")
-	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/KANAMultiRes_Translation.de.translation")
-	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/KANAMultiRes_Translation.en.translation")
+	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/translations.de.translation")
+	ModLoaderMod.add_translation("res://mods-unpacked/KANA-MultiRes/translations/translations.en.translation")
 
 
 func _ready():
 	ModLoaderLog.info("Finished loading KANA-Multi-Res mod.", KANA_MULTI_RES_LOG_NAME)
-	var mod_options := get_node("/root/ModLoader/dami-ModOptions/ModsConfigInterface")
-	mod_options.connect("setting_changed", self, "_on_mod_options_setting_changed")
+	var mod_options = get_node_or_null("/root/ModLoader/dami-ModOptions/ModsConfigInterface")
+	if mod_options:
+		mod_options.connect("setting_changed", self, "_on_mod_options_setting_changed")
+		ModLoaderLog.debug("Connected to Mod Options setting_changed signal.", KANA_MULTI_RES_LOG_NAME)
+	else:
+		ModLoaderLog.warning("ModOptions Node not found!", KANA_MULTI_RES_LOG_NAME)
 
 
 func _on_mod_options_setting_changed(setting_name, value, mod_name) -> void:
+	ModLoaderLog.debug("Mod Options setting name %s has changed to %s for mod %s" % [setting_name, value, mod_name], KANA_MULTI_RES_LOG_NAME)
 	if mod_name == KANA_MULTI_RES_DIR:
 		if ModLoaderConfig.get_current_config_name(KANA_MULTI_RES_DIR) == "default":
-			var mod_config := ModLoaderConfig.duplicate_config(ModLoaderConfig.get_default_config(KANA_MULTI_RES_DIR), "custom")
-			ModLoaderConfig.set_current_config(mod_config)
+			var new_config = duplicate_config(ModLoaderConfig.get_default_config(KANA_MULTI_RES_DIR), "custom")
+			if new_config:
+				ModLoaderConfig.set_current_config(new_config)
+			else:
+				ModLoaderConfig.set_current_config(ModLoaderConfig.get_config(KANA_MULTI_RES_DIR, "custom"))
 
-		ModLoaderConfig.update_config_value(
+		update_config_value(
 			ModLoaderConfig.get_current_config(KANA_MULTI_RES_DIR),
 			setting_name,
 			value
 		)
 
+		ModLoaderLog.debug("Updated config %s key %s with value %s" % [ModLoaderConfig.get_current_config_name(KANA_MULTI_RES_DIR), setting_name, value], KANA_MULTI_RES_LOG_NAME)
+
 		if Utils:
 			Utils.set_stretch_mode()
 
+
+func duplicate_config(config: ModConfig, config_name: String) -> ModConfig:
+	return ModLoaderConfig.create_config(config.mod_id, config_name, config.data)
+
+
+func update_config_value(config: ModConfig, key: String, new_data) -> ModConfig:
+	config.data[key] = new_data
+	return ModLoaderConfig.update_config(config)
